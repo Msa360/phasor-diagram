@@ -10,7 +10,7 @@ const Container: React.FC<ContainerProps> = ({ children, className = "" }) => {
   return (
     <div
       className={cn(
-        "flex h-full w-full items-center justify-center p-4",
+        "flex h-full w-full items-center justify-center",
         className,
       )}
     >

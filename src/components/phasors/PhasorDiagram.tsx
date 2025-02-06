@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import p5 from "p5";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const PhasorDiagram = () => {
   const canvasRef = useRef<HTMLDivElement | null>(null);
@@ -65,28 +67,30 @@ const PhasorDiagram = () => {
   };
 
   return (
-    <div className="bg-red-500">
-      <Button>hey</Button>
-      <div>
-        <label>
-          Width:
-          <input
-            type="number"
-            value={width}
-            onChange={(e) => setWidth(Number(e.target.value))}
-          />
-        </label>
-        <label>
-          Height:
-          <input
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(Number(e.target.value))}
-          />
-        </label>
-      </div>
+    <div>
       <div ref={canvasRef}></div>
-      <button onClick={downloadDiagram}>Download PNG</button>
+
+      <div className="inline-flex items-center justify-center space-x-2 rounded-sm border p-2">
+        <Label htmlFor="widthEntry" className="">
+          width:
+        </Label>
+        <Input
+          className="w-20 p-1"
+          id="width"
+          type="number"
+          value={width}
+          onChange={(e) => setWidth(Number(e.target.value))}
+        />
+        <Label htmlFor="heightEntry">height:</Label>
+        <Input
+          className="w-20 p-1"
+          id="heightEntry"
+          type="number"
+          value={height}
+          onChange={(e) => setHeight(Number(e.target.value))}
+        />
+      </div>
+      <Button onClick={downloadDiagram}>Download PNG</Button>
     </div>
   );
 };
