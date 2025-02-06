@@ -6,7 +6,7 @@ import Title from "@/components/Title";
 function App() {
   return (
     <>
-      <Container className="flex-col">
+      <Container>
         <Title />
         <PhasorDiagram />
       </Container>

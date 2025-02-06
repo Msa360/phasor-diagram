@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import p5 from "p5";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import MenuConfig from "./MenuConfig";
+import Container from "@/components/Container";
 
 const PhasorDiagram = () => {
   const canvasRef = useRef<HTMLDivElement | null>(null);
@@ -20,10 +20,10 @@ const PhasorDiagram = () => {
         p.translate(p.width / 2, p.height / 2);
 
         const phasors = [
-          { magnitude: 111.34, angle: -90, label: "QT" },
-          { magnitude: 123.01, angle: -90, label: "Qc" },
-          { magnitude: 144, angle: -53.13, label: "Qch" },
-          { magnitude: 4.8, angle: 46.87, label: "S" },
+          { magnitude: 90.34, angle: -90, label: "QT" },
+          { magnitude: 74.01, angle: -90, label: "Qc" },
+          { magnitude: 74, angle: 124.13, label: "Va" },
+          { magnitude: 49.8, angle: 46.87, label: "S" },
         ];
 
         const scaleFactor = 2;
@@ -70,27 +70,15 @@ const PhasorDiagram = () => {
     <div>
       <div ref={canvasRef}></div>
 
-      <div className="inline-flex items-center justify-center space-x-2 rounded-sm border p-2">
-        <Label htmlFor="widthEntry" className="">
-          width:
-        </Label>
-        <Input
-          className="w-20 p-1"
-          id="width"
-          type="number"
-          value={width}
-          onChange={(e) => setWidth(Number(e.target.value))}
+      <Container className="my-4 flex-row space-x-4">
+        <MenuConfig
+          width={width}
+          setWidth={setWidth}
+          height={height}
+          setHeight={setHeight}
         />
-        <Label htmlFor="heightEntry">height:</Label>
-        <Input
-          className="w-20 p-1"
-          id="heightEntry"
-          type="number"
-          value={height}
-          onChange={(e) => setHeight(Number(e.target.value))}
-        />
-      </div>
-      <Button onClick={downloadDiagram}>Download PNG</Button>
+        <Button onClick={downloadDiagram}>Download as PNG</Button>
+      </Container>
     </div>
   );
 };
