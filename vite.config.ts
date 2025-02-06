@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
   ],
-  // base: '',
+  base: '/phasor-diagram',
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
