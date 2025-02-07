@@ -1,13 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import p5 from "p5";
 import { Button } from "@/components/ui/button";
-import MenuConfig from "./MenuConfig";
 import Container from "@/components/Container";
+import MenuConfig from "@/components/phasors/MenuConfig";
+import PhasorTable from "@/components/phasors/PhasorTable";
+import { Phasor } from "@/lib/phasor";
 
 const PhasorDiagram = () => {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(500);
   const [height, setHeight] = useState(500);
+  const [phasors, setPhasors] = useState([
+    Phasor.fromDegrees(100, 0, "V"),
+    Phasor.fromDegrees(90.34, -90, "QT"),
+    Phasor.fromDegrees(74.01, -90, "Qc"),
+    Phasor.fromDegrees(74, 124.13, "Va"),
+    Phasor.fromDegrees(49.8, 46.87, "S"),
+  ]);
 
   useEffect(() => {
     const sketch = (p: p5) => {
@@ -19,13 +28,6 @@ const PhasorDiagram = () => {
         p.background(255);
         p.translate(p.width / 2, p.height / 2);
 
-        const phasors = [
-          { magnitude: 90.34, angle: -90, label: "QT" },
-          { magnitude: 74.01, angle: -90, label: "Qc" },
-          { magnitude: 74, angle: 124.13, label: "Va" },
-          { magnitude: 49.8, angle: 46.87, label: "S" },
-        ];
-
         const scaleFactor = 2;
 
         p.stroke(150);
@@ -33,9 +35,8 @@ const PhasorDiagram = () => {
         p.line(0, -p.height / 2, 0, p.height / 2);
 
         for (const phasor of phasors) {
-          const angleRad = p.radians(phasor.angle);
-          const x = phasor.magnitude * p.cos(angleRad) * scaleFactor;
-          const y = phasor.magnitude * p.sin(angleRad) * scaleFactor;
+          const x = phasor.magnitude * p.cos(phasor.angle) * scaleFactor;
+          const y = phasor.magnitude * p.sin(phasor.angle) * scaleFactor;
 
           p.stroke(0, 0, 255);
           p.strokeWeight(2);
@@ -54,7 +55,7 @@ const PhasorDiagram = () => {
     return () => {
       myP5.remove();
     };
-  }, [width, height]);
+  }, [width, height, phasors]);
 
   const downloadDiagram = () => {
     const canvas = document.querySelector("canvas");
@@ -79,6 +80,7 @@ const PhasorDiagram = () => {
         />
         <Button onClick={downloadDiagram}>Download as PNG</Button>
       </Container>
+      <PhasorTable phasors={phasors} setPhasors={setPhasors} />
     </div>
   );
 };
