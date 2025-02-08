@@ -2,6 +2,14 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Phasor } from "@/lib/phasor";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface PhasorEntryData {
   label: string;
@@ -16,18 +24,18 @@ function PhasorTable({
   phasors: Phasor[];
   setPhasors: React.Dispatch<React.SetStateAction<Phasor[]>>;
 }) {
-  const [PhasorEntry, setPhasorEntry] = useState<PhasorEntryData>({
+  const [phasorEntry, setPhasorEntry] = useState<PhasorEntryData>({
     label: "",
     magnitude: 0,
     angleDegree: 0,
   });
 
   const addPhasor = () => {
-    if (PhasorEntry) {
+    if (phasorEntry) {
       const newPhasor = Phasor.fromDegrees(
-        PhasorEntry.magnitude,
-        PhasorEntry.angleDegree,
-        PhasorEntry.label,
+        phasorEntry.magnitude,
+        phasorEntry.angleDegree,
+        phasorEntry.label,
       );
       setPhasors([...phasors, newPhasor]);
       setPhasorEntry({
@@ -43,70 +51,68 @@ function PhasorTable({
   };
 
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Label</th>
-            <th>Magnitude</th>
-            <th>Angle</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {phasors.map((phasor, index) => (
-            <tr key={index}>
-              <td>{phasor.label}</td>
-              <td>{phasor.magnitude}</td>
-              <td>{phasor.angle}</td>
-              <td>
-                <Button onClick={() => deletePhasor(index)}>Delete</Button>
-              </td>
-            </tr>
-          ))}
-          <tr>
-            <td>
-              <Input
-                value={PhasorEntry.label}
-                onChange={(e) =>
-                  setPhasorEntry({ ...PhasorEntry, label: e.target.value })
-                }
-                placeholder="Label"
-              />
-            </td>
-            <td>
-              <Input
-                value={PhasorEntry.magnitude}
-                onChange={(e) =>
-                  setPhasorEntry({
-                    ...PhasorEntry,
-                    magnitude: Number(e.target.value),
-                  })
-                }
-                placeholder="Magnitude"
-                type="number"
-              />
-            </td>
-            <td>
-              <Input
-                value={PhasorEntry.angleDegree}
-                onChange={(e) =>
-                  setPhasorEntry({
-                    ...PhasorEntry,
-                    angleDegree: Number(e.target.value),
-                  })
-                }
-                placeholder="Angle"
-                type="number"
-              />
-            </td>
-            <td>
-              <Button onClick={addPhasor}>Add</Button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Label</TableHead>
+          <TableHead>Magnitude</TableHead>
+          <TableHead>Angle</TableHead>
+          <TableHead>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {phasors.map((phasor, index) => (
+          <TableRow key={index}>
+            <TableCell>{phasor.label}</TableCell>
+            <TableCell>{phasor.magnitude}</TableCell>
+            <TableCell>{phasor.angle}</TableCell>
+            <TableCell>
+              <Button onClick={() => deletePhasor(index)}>Delete</Button>
+            </TableCell>
+          </TableRow>
+        ))}
+        <TableRow>
+          <TableCell>
+            <Input
+              value={phasorEntry.label}
+              onChange={(e) =>
+                setPhasorEntry({ ...phasorEntry, label: e.target.value })
+              }
+              placeholder="Label"
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              value={phasorEntry.magnitude}
+              onChange={(e) =>
+                setPhasorEntry({
+                  ...phasorEntry,
+                  magnitude: Number(e.target.value),
+                })
+              }
+              placeholder="Magnitude"
+              type="number"
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              value={phasorEntry.angleDegree}
+              onChange={(e) =>
+                setPhasorEntry({
+                  ...phasorEntry,
+                  angleDegree: Number(e.target.value),
+                })
+              }
+              placeholder="Angle"
+              type="number"
+            />
+          </TableCell>
+          <TableCell>
+            <Button onClick={addPhasor}>Add</Button>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   );
 }
 
