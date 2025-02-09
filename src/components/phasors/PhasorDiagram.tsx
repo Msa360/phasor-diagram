@@ -13,7 +13,6 @@ const PhasorDiagram = () => {
   const [phasors, setPhasors] = useState([
     Phasor.fromDegrees(100, 0, "V"),
     Phasor.fromDegrees(90.34, -90, "QT"),
-    Phasor.fromDegrees(74.01, -90, "Qc"),
     Phasor.fromDegrees(74, 124.13, "Va"),
     Phasor.fromDegrees(49.8, 46.87, "S"),
   ]);

@@ -13,8 +13,8 @@ import {
 
 interface PhasorEntryData {
   label: string;
-  magnitude: number;
-  angleDegree: number;
+  magnitude: string;
+  angleDegree: string;
 }
 
 function PhasorTable({
@@ -26,22 +26,22 @@ function PhasorTable({
 }) {
   const [phasorEntry, setPhasorEntry] = useState<PhasorEntryData>({
     label: "",
-    magnitude: 0,
-    angleDegree: 0,
+    magnitude: "",
+    angleDegree: "",
   });
 
   const addPhasor = () => {
     if (phasorEntry) {
       const newPhasor = Phasor.fromDegrees(
-        phasorEntry.magnitude,
-        phasorEntry.angleDegree,
+        Number(phasorEntry.magnitude),
+        Number(phasorEntry.angleDegree),
         phasorEntry.label,
       );
       setPhasors([...phasors, newPhasor]);
       setPhasorEntry({
         label: "",
-        magnitude: 0,
-        angleDegree: 0,
+        magnitude: "",
+        angleDegree: "",
       });
     }
   };
@@ -56,21 +56,11 @@ function PhasorTable({
         <TableRow>
           <TableHead>Label</TableHead>
           <TableHead>Magnitude</TableHead>
-          <TableHead>Angle</TableHead>
+          <TableHead>Angle (°)</TableHead>
           <TableHead>Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {phasors.map((phasor, index) => (
-          <TableRow key={index}>
-            <TableCell>{phasor.label}</TableCell>
-            <TableCell>{phasor.magnitude}</TableCell>
-            <TableCell>{phasor.angle}</TableCell>
-            <TableCell>
-              <Button onClick={() => deletePhasor(index)}>Delete</Button>
-            </TableCell>
-          </TableRow>
-        ))}
         <TableRow>
           <TableCell>
             <Input
@@ -87,11 +77,10 @@ function PhasorTable({
               onChange={(e) =>
                 setPhasorEntry({
                   ...phasorEntry,
-                  magnitude: Number(e.target.value),
+                  magnitude: e.target.value,
                 })
               }
               placeholder="Magnitude"
-              type="number"
             />
           </TableCell>
           <TableCell>
@@ -100,17 +89,37 @@ function PhasorTable({
               onChange={(e) =>
                 setPhasorEntry({
                   ...phasorEntry,
-                  angleDegree: Number(e.target.value),
+                  angleDegree: e.target.value,
                 })
               }
               placeholder="Angle"
-              type="number"
             />
           </TableCell>
           <TableCell>
-            <Button onClick={addPhasor}>Add</Button>
+            <Button className="w-20" onClick={addPhasor}>
+              Add
+            </Button>
           </TableCell>
         </TableRow>
+        {phasors.map((phasor, index) => (
+          <TableRow key={index}>
+            <TableCell>{phasor.label}</TableCell>
+            <TableCell>{phasor.magnitude}</TableCell>
+            <TableCell>{phasor.angleDegrees.toFixed(3)}</TableCell>
+            <TableCell>
+              {/* <Button className="w-20" onClick={() => editPhasor(index)}>
+                Edit
+              </Button> */}
+              <Button
+                variant="destructive"
+                className="w-20"
+                onClick={() => deletePhasor(index)}
+              >
+                Delete
+              </Button>
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
