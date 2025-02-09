@@ -51,7 +51,7 @@ function PhasorTable({
   };
 
   return (
-    <Table>
+    <Table className="mx-auto sm:max-w-xl">
       <TableHeader>
         <TableRow>
           <TableHead>Label</TableHead>

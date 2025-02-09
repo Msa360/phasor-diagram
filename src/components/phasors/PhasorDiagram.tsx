@@ -68,19 +68,26 @@ const PhasorDiagram = () => {
   };
 
   return (
-    <div>
-      <Container className="mt-4 space-x-4 space-y-4 md:flex-row">
-        <div ref={canvasRef}></div>
-        <PhasorTable phasors={phasors} setPhasors={setPhasors} />
-      </Container>
-      <MenuConfig
-        width={width}
-        setWidth={setWidth}
-        height={height}
-        setHeight={setHeight}
-      />
-      <Button onClick={downloadDiagram}>Download as PNG</Button>
-    </div>
+    <>
+      <div className="mt-4 w-full space-y-4 lg:flex lg:flex-row lg:space-x-4 lg:space-y-0">
+        <div
+          className="flex w-full items-center justify-center lg:w-1/2"
+          ref={canvasRef}
+        ></div>
+        <Container className="lg:w-1/2">
+          <PhasorTable phasors={phasors} setPhasors={setPhasors} />
+          <Container className="flex-row space-x-4">
+            <MenuConfig
+              width={width}
+              setWidth={setWidth}
+              height={height}
+              setHeight={setHeight}
+            />
+            <Button onClick={downloadDiagram}>Download as PNG</Button>
+          </Container>
+        </Container>
+      </div>
+    </>
   );
 };
 
