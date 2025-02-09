@@ -11,7 +11,7 @@ interface MenuConfigProps {
 function MenuConfig({ width, setWidth, height, setHeight }: MenuConfigProps) {
   return (
     <>
-      <div className="ring-foreground inline-flex items-center justify-center space-x-2 rounded-md p-2 ring-2">
+      <div className="inline-flex items-center justify-center space-x-2 rounded-md border-2 border-foreground p-2">
         <Label htmlFor="widthEntry">width:</Label>
         <Input
           className="w-20 p-1"

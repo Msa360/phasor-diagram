@@ -1,6 +1,8 @@
-[Deploying to github-pages](https://vite.dev/guide/static-deploy.html#github-pages)
+# Online Phasor Diagram Maker
 
-# React + TypeScript + Vite + Shadcn/ui
+Built with **React** + **TypeScript** + **Vite** + **Shadcn/ui**
+
+[Deploying to github-pages](https://vite.dev/guide/static-deploy.html#github-pages)
 
 ## Expanding the ESLint configuration
 
